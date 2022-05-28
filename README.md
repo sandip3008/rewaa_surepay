@@ -1,0 +1,2 @@
+# rewaa surepay capacitor plugin
+
