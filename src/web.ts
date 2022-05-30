@@ -9,8 +9,8 @@ export class SurepayWeb extends WebPlugin implements SurepayPlugin {
     return options;
   }
 
-  async enableBluetoothListnerService(value: string): Promise<string> {
-    console.log('enableBluetoothListnerService web 13', value);
+  async enableBluetoothListenerService(value: string): Promise<string> {
+    console.log('enableBluetoothListenerService web 13', value);
     return value;
   }
 

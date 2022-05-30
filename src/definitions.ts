@@ -7,7 +7,7 @@ export interface SurepayPlugin {
 
   getConnectedDeviceInfo(value: string): Promise<string>;
   
-  enableBluetoothListnerService(value: string): Promise<string>;
+  enableBluetoothListenerService(value: string): Promise<string>;
 
   submitTransaction(value: string): Promise<string>;
 
