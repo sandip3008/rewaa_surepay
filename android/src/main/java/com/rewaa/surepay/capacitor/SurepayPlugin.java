@@ -18,9 +18,12 @@ public class SurepayPlugin extends Plugin {
     @PluginMethod
     public void echo(PluginCall call) {
         String value = call.getString("value");
-        Log.e(TAG, "echo: test Surepay" );
+        Log.i("TAG", "echo: test Surepay: " + call );
         JSObject ret = new JSObject();
+        ret.put("value1", "Abc##");
+        ret.put("status", "connected");
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
     }
+
 }
