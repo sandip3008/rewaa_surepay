@@ -20,6 +20,214 @@
         "docs": "",
         "complexTypes": [],
         "slug": "echo"
+      },
+      {
+        "name": "disableBluetoothListnerService",
+        "signature": "(value: boolean) => Promise<boolean>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "boolean"
+          }
+        ],
+        "returns": "Promise<boolean>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "disablebluetoothlistnerservice"
+      },
+      {
+        "name": "getSurepayConnectionStatus",
+        "signature": "(value: boolean) => Promise<boolean>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "boolean"
+          }
+        ],
+        "returns": "Promise<boolean>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "getsurepayconnectionstatus"
+      },
+      {
+        "name": "getConnectedDeviceInfo",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "getconnecteddeviceinfo"
+      },
+      {
+        "name": "enableBluetoothListenerService",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "enablebluetoothlistenerservice"
+      },
+      {
+        "name": "submitTransaction",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "submittransaction"
+      },
+      {
+        "name": "getLastTransactionDetails",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "getlasttransactiondetails"
+      },
+      {
+        "name": "showLastTransactionDetails",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "showlasttransactiondetails"
+      },
+      {
+        "name": "exportLastTransaction",
+        "signature": "(value: boolean) => Promise<boolean>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "boolean"
+          }
+        ],
+        "returns": "Promise<boolean>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "exportlasttransaction"
+      },
+      {
+        "name": "clearLastTransaction",
+        "signature": "(value: boolean) => Promise<boolean>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "boolean"
+          }
+        ],
+        "returns": "Promise<boolean>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "clearlasttransaction"
+      },
+      {
+        "name": "OnNewReceiptFromSurepayDevice",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "onnewreceiptfromsurepaydevice"
+      },
+      {
+        "name": "OnConnectionLost",
+        "signature": "(value: void) => Promise<void>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "void"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "onconnectionlost"
+      },
+      {
+        "name": "OnConnectionEstablished",
+        "signature": "(value: void) => Promise<void>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "void"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "onconnectionestablished"
+      },
+      {
+        "name": "OnError",
+        "signature": "(value: string) => Promise<string>",
+        "parameters": [
+          {
+            "name": "value",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<string>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "onerror"
       }
     ],
     "properties": []
