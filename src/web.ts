@@ -29,9 +29,9 @@ export class SurepayWeb extends WebPlugin implements SurepayPlugin {
     return value;
   }
 
-  async submitTransaction(value: string): Promise<string> {
-    console.log('submitTransaction amount: ', value);
-    return value;
+  async submitTransaction(amount: string): Promise<string> {
+    console.log('submitTransaction amount: ', amount);
+    return amount;
   }
 
   async getLastTransactionDetails(value: string): Promise<string> {

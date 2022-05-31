@@ -1,23 +1,15 @@
 package com.rewaa.surepay.capacitor;
 
-import static android.content.ContentValues.TAG;
+import static com.sure.poslibrary.POSService.lastFinTransStr;
 
-import android.Manifest;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.sure.poslibrary.Constants;
 import com.sure.poslibrary.POSService;
 import com.sure.poslibrary.callback.ConnectionInterface;
@@ -41,7 +33,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void echo(PluginCall call) {
         String value = call.getString("value");
-        Log.i(TAG, "echo: test Surepay: " + call );
+        Log.i(TAG, "echo: test Surepay: " + call);
         JSObject ret = new JSObject();
         ret.put("value1", "Abc##");
         ret.put("status", "connected");
@@ -52,14 +44,14 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void enableBluetoothListenerService(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "enableBluetoothListenerService: " + call );
-        if(lService.StartListenService(mContext, "BT", Constants.SERVICE_NAME, null, null,true)==0){
-            Log.w(TAG,"Service started to listen");
+        Log.i(TAG, "enableBluetoothListenerService: " + call);
+        if (lService.StartListenService(mContext, "BT", Constants.SERVICE_NAME, null, null, true) == 0) {
+            Log.w(TAG, "Service started to listen");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
-        }else{
-            Log.w(TAG,"Failed to start service listener");
+        } else {
+            Log.w(TAG, "Failed to start service listener");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -69,14 +61,14 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void disableBluetoothListnerService(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "disableBluetoothListnerService: " + call );
-        if(lService.ShutdownListenService()==0){
-            Log.w(TAG,"service is shutdown");
+        Log.i(TAG, "disableBluetoothListnerService: " + call);
+        if (lService.ShutdownListenService() == 0) {
+            Log.w(TAG, "service is shutdown");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
-        }else{
-            Log.w(TAG,"Failed to shutdown service");
+        } else {
+            Log.w(TAG, "Failed to shutdown service");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -86,14 +78,14 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void getSurepayConnectionStatus(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "getSurepayConnectionStatus: " + call );
-        if(lService.checkConnectionStatus()==0){
-            Log.w(TAG,"Device is connected");
+        Log.i(TAG, "getSurepayConnectionStatus: " + call);
+        if (lService.checkConnectionStatus() == 0) {
+            Log.w(TAG, "Device is connected");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
-        }else{
-            Log.w(TAG,"Device is not connected");
+        } else {
+            Log.w(TAG, "Device is not connected");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -102,39 +94,108 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void getConnectedDeviceInfo(PluginCall call) {
-//        String value = call.getString("value");
-        Log.i(TAG, "getConnectedDeviceInfo: " + call );
-        if(lService.GetConnectedDeviceInfo()==0){
-            Log.w(TAG,POSService.deviceInfoStr);
+        Log.i(TAG, "getConnectedDeviceInfo: " + call);
+        if (lService.GetConnectedDeviceInfo() == 0) {
+            Log.w(TAG, POSService.deviceInfoStr);
             JSObject ret = new JSObject();
             ret.put("deviceInfo", POSService.deviceInfoStr);
             call.resolve(ret);
-        }else{
-            Log.w(TAG,"No device is connected\"");
+        } else {
+            Log.w(TAG, "No device is connected\"");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
         }
     }
 
+    @PluginMethod
+
+
+    public void submitTransaction(PluginCall call) {
+        String amount = call.getString("amount");
+        Log.i(TAG, "submitTransaction: " + call);
+        lService.PerformFinTrx(mContext, 0, amount, null, null, null);
+    }
+
+
+    @PluginMethod
+    public void getLastTransactionDetails(PluginCall call) {
+        Log.i(TAG, "getLastTransactionDetails: " + call);
+        if (lService.GetLastTrxResult(mContext) == 0) {
+            Log.w(TAG, lastFinTransStr);
+            JSObject ret = new JSObject();
+            ret.put("trxInfo", lastFinTransStr);
+            call.resolve(ret);
+        } else {
+            Log.w(TAG, "No transactions");
+            JSObject ret = new JSObject();
+            ret.put("result", false);
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void showLastTransactionDetails(PluginCall call) {
+        Log.i(TAG, "showLastTransactionDetails: " + call);
+        if (lService.ShowReceipt(mContext) == 0) {
+            Log.w(TAG, lastFinTransStr);
+            JSObject ret = new JSObject();
+            ret.put("trxInfo", "Showing transaction");
+            call.resolve(ret);
+        } else {
+            Log.w(TAG, "No transactions");
+            JSObject ret = new JSObject();
+            ret.put("result", "No transactions");
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void exportLastTransaction(PluginCall call) {
+        Log.i(TAG, "exportLastTransaction: " + call);
+        if (lService.ExportReceipt(mContext) == 0) {
+            Log.w(TAG, lastFinTransStr);
+            JSObject ret = new JSObject();
+            ret.put("trxInfo", "File saved on Downloads folder");
+            call.resolve(ret);
+        } else {
+            Log.w(TAG, "No transactions");
+            JSObject ret = new JSObject();
+            ret.put("result", "Error");
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void clearLastTransaction(PluginCall call) {
+        Log.i(TAG, "clearLastTransaction: " + call);
+        if (lService.ClearTransactions(mContext) == 0) {
+            Log.w(TAG, lastFinTransStr);
+            JSObject ret = new JSObject();
+            ret.put("trxInfo", "Transactions cleared");
+            call.resolve(ret);
+        }
+    }
+
+
     @Override
     public void OnNewReceipt(String s) {
-
+        System.out.println("callback function: new receipt -----> " + s);
     }
 
     @Override
     public void OnConnectionLost() {
-
+        System.out.println("callback function: Connection lost :(");
     }
 
     @Override
     public void OnConnectionEstablished() {
-
+        System.out.println("callback function: Connection established :)");
     }
 
     @Override
-    public void OnError(int i) {
-
+    public void OnError(int iError) {
+        System.out.println("callback function: OnError .. Error code = " + iError);
     }
 
 //    private void grantPermission(){
