@@ -87,10 +87,10 @@
       },
       {
         "name": "submitTransaction",
-        "signature": "(value: string) => Promise<string>",
+        "signature": "(amount: string) => Promise<string>",
         "parameters": [
           {
-            "name": "value",
+            "name": "amount",
             "docs": "",
             "type": "string"
           }

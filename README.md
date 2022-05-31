@@ -111,12 +111,12 @@ enableBluetoothListenerService(value: string) => Promise<string>
 ### submitTransaction(...)
 
 ```typescript
-submitTransaction(value: string) => Promise<string>
+submitTransaction(amount: string) => Promise<string>
 ```
 
-| Param       | Type                |
-| ----------- | ------------------- |
-| **`value`** | <code>string</code> |
+| Param        | Type                |
+| ------------ | ------------------- |
+| **`amount`** | <code>string</code> |
 
 **Returns:** <code>Promise&lt;string&gt;</code>
 

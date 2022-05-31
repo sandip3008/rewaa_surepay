@@ -26,9 +26,9 @@ var capacitorSurepay = (function (exports, core) {
             console.log('getConnectedDeviceInfo', value);
             return value;
         }
-        async submitTransaction(value) {
-            console.log('submitTransaction amount: ', value);
-            return value;
+        async submitTransaction(amount) {
+            console.log('submitTransaction amount: ', amount);
+            return amount;
         }
         async getLastTransactionDetails(value) {
             console.log('getLastTransactionDetails', value);

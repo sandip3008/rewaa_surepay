@@ -10,7 +10,7 @@ export declare class SurepayWeb extends WebPlugin implements SurepayPlugin {
     disableBluetoothListnerService(value: boolean): Promise<boolean>;
     getSurepayConnectionStatus(value: boolean): Promise<boolean>;
     getConnectedDeviceInfo(value: string): Promise<string>;
-    submitTransaction(value: string): Promise<string>;
+    submitTransaction(amount: string): Promise<string>;
     getLastTransactionDetails(value: string): Promise<string>;
     showLastTransactionDetails(value: string): Promise<string>;
     getPrinterStatus(value: string): Promise<string>;
