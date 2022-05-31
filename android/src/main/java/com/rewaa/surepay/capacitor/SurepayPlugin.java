@@ -64,7 +64,57 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
             ret.put("result", false);
             call.resolve(ret);
         }
+    }
 
+    @PluginMethod
+    public void disableBluetoothListnerService(PluginCall call) {
+//        String value = call.getString("value");
+        Log.i(TAG, "disableBluetoothListnerService: " + call );
+        if(lService.ShutdownListenService()==0){
+            Log.w(TAG,"service is shutdown");
+            JSObject ret = new JSObject();
+            ret.put("result", true);
+            call.resolve(ret);
+        }else{
+            Log.w(TAG,"Failed to shutdown service");
+            JSObject ret = new JSObject();
+            ret.put("result", false);
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void getSurepayConnectionStatus(PluginCall call) {
+//        String value = call.getString("value");
+        Log.i(TAG, "getSurepayConnectionStatus: " + call );
+        if(lService.checkConnectionStatus()==0){
+            Log.w(TAG,"Device is connected");
+            JSObject ret = new JSObject();
+            ret.put("result", true);
+            call.resolve(ret);
+        }else{
+            Log.w(TAG,"Device is not connected");
+            JSObject ret = new JSObject();
+            ret.put("result", false);
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void getConnectedDeviceInfo(PluginCall call) {
+//        String value = call.getString("value");
+        Log.i(TAG, "getConnectedDeviceInfo: " + call );
+        if(lService.GetConnectedDeviceInfo()==0){
+            Log.w(TAG,POSService.deviceInfoStr);
+            JSObject ret = new JSObject();
+            ret.put("deviceInfo", POSService.deviceInfoStr);
+            call.resolve(ret);
+        }else{
+            Log.w(TAG,"No device is connected\"");
+            JSObject ret = new JSObject();
+            ret.put("result", false);
+            call.resolve(ret);
+        }
     }
 
     @Override
