@@ -3,6 +3,7 @@ package com.rewaa.surepay.capacitor;
 import static com.sure.poslibrary.POSService.lastFinTransStr;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
@@ -39,6 +40,21 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         ret.put("status", "connected");
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
+    }
+
+    @PluginMethod
+    public void printOnSurepay(PluginCall call) {
+        String content = call.getString("content");
+        String type = call.getString("type");
+        Log.i(TAG, "printOnSurepay: " + call);
+        openReceiptActivity(content,type);
+    }
+
+    private void openReceiptActivity(String data,String type) {
+        Intent intent = new Intent(mContext, ReceiptActivity.class);
+        intent.putExtra("data",data);
+        intent.putExtra("type",type);
+        mContext.startActivity(intent);
     }
 
     @PluginMethod
@@ -119,22 +135,6 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
 
     @PluginMethod
-    public void getLastTransactionDetails(PluginCall call) {
-        Log.i(TAG, "getLastTransactionDetails: " + call);
-        if (lService.GetLastTrxResult(mContext) == 0) {
-            Log.w(TAG, lastFinTransStr);
-            JSObject ret = new JSObject();
-            ret.put("trxInfo", lastFinTransStr);
-            call.resolve(ret);
-        } else {
-            Log.w(TAG, "No transactions");
-            JSObject ret = new JSObject();
-            ret.put("result", false);
-            call.resolve(ret);
-        }
-    }
-
-    @PluginMethod
     public void showLastTransactionDetails(PluginCall call) {
         Log.i(TAG, "showLastTransactionDetails: " + call);
         if (lService.ShowReceipt(mContext) == 0) {
@@ -146,6 +146,22 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
             Log.w(TAG, "No transactions");
             JSObject ret = new JSObject();
             ret.put("result", "No transactions");
+            call.resolve(ret);
+        }
+    }
+
+    @PluginMethod
+    public void getLastTransactionDetails(PluginCall call) {
+        Log.i(TAG, "getLastTransactionDetails: " + call);
+        if (lService.GetLastTrxResult(mContext) == 0) {
+            Log.w(TAG, lastFinTransStr);
+            JSObject ret = new JSObject();
+            ret.put("trxInfo", lastFinTransStr);
+            call.resolve(ret);
+        } else {
+            Log.w(TAG, "No transactions");
+            JSObject ret = new JSObject();
+            ret.put("result", false);
             call.resolve(ret);
         }
     }

@@ -1,5 +1,7 @@
 export interface SurepayPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
+
+  printOnSurepay(options: { value: string }): Promise<{ value: string }>;
    
   disableBluetoothListnerService(value: boolean):  Promise<boolean>;
 
