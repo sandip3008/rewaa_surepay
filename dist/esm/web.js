@@ -4,6 +4,10 @@ export class SurepayWeb extends WebPlugin {
         console.log('ECHO', options);
         return options;
     }
+    async printOnSurepay(options) {
+        console.log('printOnSurepay web 13', options);
+        return options;
+    }
     async enableBluetoothListenerService(value) {
         console.log('enableBluetoothListenerService web 13', value);
         return value;

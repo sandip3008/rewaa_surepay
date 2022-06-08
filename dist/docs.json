@@ -22,6 +22,22 @@
         "slug": "echo"
       },
       {
+        "name": "printOnSurepay",
+        "signature": "(options: { value: string; }) => Promise<{ value: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ value: string; }"
+          }
+        ],
+        "returns": "Promise<{ value: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "printonsurepay"
+      },
+      {
         "name": "disableBluetoothListnerService",
         "signature": "(value: boolean) => Promise<boolean>",
         "parameters": [
