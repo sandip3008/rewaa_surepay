@@ -52,14 +52,14 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 ### printOnSurepay(...)
 
 ```typescript
-printOnSurepay(options: { value: string; }) => Promise<{ value: string; }>
+printOnSurepay(options: { content: string; type: string; }) => Promise<{ content: string; type: string; }>
 ```
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
+| Param         | Type                                            |
+| ------------- | ----------------------------------------------- |
+| **`options`** | <code>{ content: string; type: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>Promise&lt;{ content: string; type: string; }&gt;</code>
 
 --------------------
 

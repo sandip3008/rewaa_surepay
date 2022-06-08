@@ -5,9 +5,11 @@ export interface SurepayPlugin {
         value: string;
     }>;
     printOnSurepay(options: {
-        value: string;
+        content: string;
+        type: string;
     }): Promise<{
-        value: string;
+        content: string;
+        type: string;
     }>;
     disableBluetoothListnerService(value: boolean): Promise<boolean>;
     getSurepayConnectionStatus(value: boolean): Promise<boolean>;

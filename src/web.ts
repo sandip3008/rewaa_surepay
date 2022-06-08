@@ -11,8 +11,8 @@ export class SurepayWeb extends WebPlugin implements SurepayPlugin {
 
   
 
-  async printOnSurepay(options: { value: string }): Promise<{ value: string }> {
-    console.log('printOnSurepay web 13', options);
+  async printOnSurepay(options: { content: string, type: string }): Promise<{ content: string; type: string }> {
+    console.log('printOnSurepay web 15', options);
     return options;
   }
 

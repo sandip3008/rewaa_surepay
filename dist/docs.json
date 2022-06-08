@@ -23,15 +23,15 @@
       },
       {
         "name": "printOnSurepay",
-        "signature": "(options: { value: string; }) => Promise<{ value: string; }>",
+        "signature": "(options: { content: string; type: string; }) => Promise<{ content: string; type: string; }>",
         "parameters": [
           {
             "name": "options",
             "docs": "",
-            "type": "{ value: string; }"
+            "type": "{ content: string; type: string; }"
           }
         ],
-        "returns": "Promise<{ value: string; }>",
+        "returns": "Promise<{ content: string; type: string; }>",
         "tags": [],
         "docs": "",
         "complexTypes": [],

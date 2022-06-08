@@ -11,7 +11,7 @@ var capacitorSurepay = (function (exports, core) {
             return options;
         }
         async printOnSurepay(options) {
-            console.log('printOnSurepay web 13', options);
+            console.log('printOnSurepay web 15', options);
             return options;
         }
         async enableBluetoothListenerService(value) {
