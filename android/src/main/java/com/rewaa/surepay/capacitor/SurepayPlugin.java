@@ -28,6 +28,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     public void load() {
         super.load();
         this.mContext = getContext();
+        lService = new POSService(this);
 //        grantPermission();
     }
 

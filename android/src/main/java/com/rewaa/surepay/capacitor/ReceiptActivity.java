@@ -28,13 +28,15 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import CTOS.CtPrint;
 
 
-public class ReceiptActivity extends Activity {
+public class ReceiptActivity extends AppCompatActivity {
 
   WebView webView;
   ProgressBar progressBar;
@@ -50,13 +52,13 @@ public class ReceiptActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    String package_name = getApplication().getPackageName();
+//    String package_name = getApplication().getPackageName();
     if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
       WebView.enableSlowWholeDocumentDraw();
     }
-    setContentView(getApplication().getResources().getIdentifier("activity_main", "layout", package_name));
+    setContentView(R.layout.activity_receipt);
+//    setContentView(getApplication().getResources().getIdentifier("activity_main", "layout", package_name));
 
-//        getSupportActionBar().hide();
     //INIT PRINT
     try {
             print = new CtPrint();
@@ -248,6 +250,7 @@ public class ReceiptActivity extends Activity {
         print.drawImage(finalPrint, 0, 0);
         print.printPage();
         print.roll(100);
+        finish();
   }
 
   //create a function to create the print job

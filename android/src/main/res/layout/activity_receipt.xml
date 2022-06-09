@@ -18,7 +18,7 @@
 
         <WebView
             android:id="@+id/web"
-            android:layout_width="220dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:scrollbars="none" />
@@ -38,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scrollViewPrint"
-        android:visibility="gone"
+
         android:text="PRINT" />
 </RelativeLayout>

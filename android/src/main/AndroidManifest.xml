@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rewaa.surepay.capacitor">
 
-    <application>
-        <activity android:name=".ReceiptActivity" />
+    <application
+        android:theme="@style/AppTheme">
+        <activity android:name=".ReceiptActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>
