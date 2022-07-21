@@ -6,7 +6,7 @@
         <activity android:name=".ReceiptActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <receiver
-            android:name=".SurepayPlugin$AmountBroadcastReceiver"
+            android:name=".SurepayPlugin$PaymentStatusReceiver"
             android:enabled="true"
             android:exported="true" />
     </application>

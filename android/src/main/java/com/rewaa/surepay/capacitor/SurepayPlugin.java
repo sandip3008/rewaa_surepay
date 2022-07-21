@@ -21,7 +21,6 @@ import com.sure.poslibrary.Constants;
 import com.sure.poslibrary.POSService;
 import com.sure.poslibrary.callback.ConnectionInterface;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 @CapacitorPlugin(name = "Surepay")
@@ -31,7 +30,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     private Context mContext;
     POSService lService;
     private String TAG = "SurepayPlugin";
-    private AmountBroadcastReceiver amountBroadcastReceiver;
+    private PaymentStatusReceiver paymentStatusReceiver;
 
 
     @Override
@@ -138,10 +137,10 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void submitTransaction(PluginCall call) {
 
-        amountBroadcastReceiver = new AmountBroadcastReceiver(call);
+        paymentStatusReceiver = new PaymentStatusReceiver(call);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("surepay.mada.RESULT");
-        this.mContext.registerReceiver(amountBroadcastReceiver,intentFilter);
+        this.mContext.registerReceiver(paymentStatusReceiver,intentFilter);
 
         String amount = call.getString("amount");
         Log.i(TAG, "submitTransaction: " + call);
@@ -285,13 +284,13 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         System.out.println("callback function: OnError .. Error code = " + iError);
     }
 
-    public static class AmountBroadcastReceiver extends BroadcastReceiver {
+    public static class PaymentStatusReceiver extends BroadcastReceiver {
         private PluginCall pluginCall = null;
 
-        public AmountBroadcastReceiver() {
+        public PaymentStatusReceiver() {
         }
 
-        public AmountBroadcastReceiver(PluginCall call) {
+        public PaymentStatusReceiver(PluginCall call) {
             this.pluginCall = call;
         }
 
@@ -304,12 +303,17 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
                 Log.d("My App", obj.toString());
                 if(pluginCall!=null){
                     JSObject jsObject = new JSObject();
-//                    jsObject.put("amount", obj.get("AMOUNT"));
+                    jsObject.put("status", true);
                     jsObject.put("result", result);
                     pluginCall.resolve(jsObject);
                 }
                 context.unregisterReceiver(this);
-            } catch (Throwable t) {
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSObject jsObject = new JSObject();
+                jsObject.put("status", false);
+                jsObject.put("result", result);
+                pluginCall.resolve(jsObject);
                 Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
             }
         }
