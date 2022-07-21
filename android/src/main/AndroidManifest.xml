@@ -5,5 +5,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ReceiptActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <receiver
+            android:name=".SurepayPlugin$AmountBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 </manifest>

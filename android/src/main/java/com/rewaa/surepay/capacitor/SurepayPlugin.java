@@ -2,9 +2,15 @@ package com.rewaa.surepay.capacitor;
 
 import static com.sure.poslibrary.POSService.lastFinTransStr;
 
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -15,6 +21,9 @@ import com.sure.poslibrary.Constants;
 import com.sure.poslibrary.POSService;
 import com.sure.poslibrary.callback.ConnectionInterface;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @CapacitorPlugin(name = "Surepay")
 public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
@@ -22,6 +31,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     private Context mContext;
     POSService lService;
     private String TAG = "SurepayPlugin";
+    private AmountBroadcastReceiver amountBroadcastReceiver;
 
 
     @Override
@@ -126,12 +136,72 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     }
 
     @PluginMethod
-
-
     public void submitTransaction(PluginCall call) {
+
+        amountBroadcastReceiver = new AmountBroadcastReceiver(call);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("surepay.mada.RESULT");
+        this.mContext.registerReceiver(amountBroadcastReceiver,intentFilter);
+
         String amount = call.getString("amount");
         Log.i(TAG, "submitTransaction: " + call);
-        lService.PerformFinTrx(mContext, 0, amount, null, null, null);
+        double a = 0;
+        try{
+             a = Double.parseDouble(amount);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        if(a>0) {
+            sendAmountToMadaApplication(amount);
+        }else{
+            Toast.makeText(mContext, "Invalid amount", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void sendAmountToMadaApplication(String amount) {
+        if (!isMadaAppInstalled()) {
+            Toast.makeText(mContext, "Mada App Not Installed", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!isMadaAppRunning()) {
+            Toast.makeText(mContext, "Mada App Not Running", Toast.LENGTH_SHORT).show();
+        }
+        Intent intent = new Intent("surepay.mada.PAY_AMOUNT");
+//        intent.putExtra("LICENCE", "YOUR_LICENCE_FROM_SURE_HERE");
+        intent.putExtra("AMOUNT", amount);
+        mContext.sendBroadcast(intent);
+    }
+
+
+    boolean isMadaAppRunning() {
+        try {
+            ActivityManager manager =
+                    (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if ("com.surepay.mada.MadaIntegration.MadaIntegrationService".equals(service.service.getClassName()))
+                    return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean isMadaAppInstalled() {
+        PackageManager packageManager = mContext.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo("com.surepay.mada", PackageManager.GET_ACTIVITIES);
+            return packageInfo != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public void sendEvent(JSObject data) {
+        notifyListeners("surepayPaymentRes", data);
     }
 
 
@@ -213,6 +283,36 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @Override
     public void OnError(int iError) {
         System.out.println("callback function: OnError .. Error code = " + iError);
+    }
+
+    public static class AmountBroadcastReceiver extends BroadcastReceiver {
+        private PluginCall pluginCall = null;
+
+        public AmountBroadcastReceiver() {
+        }
+
+        public AmountBroadcastReceiver(PluginCall call) {
+            this.pluginCall = call;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getExtras().getString("RESULT");
+            Log.e("RESULT","==================> "+result);
+            try {
+                JSONObject obj = new JSONObject(result);
+                Log.d("My App", obj.toString());
+                if(pluginCall!=null){
+                    JSObject jsObject = new JSObject();
+//                    jsObject.put("amount", obj.get("AMOUNT"));
+                    jsObject.put("result", result);
+                    pluginCall.resolve(jsObject);
+                }
+                context.unregisterReceiver(this);
+            } catch (Throwable t) {
+                Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
+            }
+        }
     }
 
 //    private void grantPermission(){
