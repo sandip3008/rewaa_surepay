@@ -11,7 +11,7 @@ export interface SurepayPlugin {
   
   enableBluetoothListenerService(value: string): Promise<string>;
 
-  submitTransaction(amount: string): Promise<string>;
+  submitTransaction(options: { amount: string }): Promise<{ amount: string }>;
 
   getLastTransactionDetails(value: string): Promise<string>;
 
