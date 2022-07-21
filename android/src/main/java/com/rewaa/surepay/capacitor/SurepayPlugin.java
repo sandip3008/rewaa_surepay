@@ -143,28 +143,39 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         this.mContext.registerReceiver(paymentStatusReceiver,intentFilter);
 
         String amount = call.getString("amount");
+        if(amount==null){
+            call.reject("amount_not_valid");
+            mContext.unregisterReceiver(paymentStatusReceiver);
+            return;
+        }
         Log.i(TAG, "submitTransaction: " + call);
-        double a = 0;
+        double finalAmount = 0.00d;
         try{
-             a = Double.parseDouble(amount);
+            finalAmount = Double.parseDouble(String.format("%.2f", amount));
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        if(a>0) {
-            sendAmountToMadaApplication(amount);
+        Log.e("finalAmount",String.valueOf(finalAmount));
+        if(finalAmount > 0) {
+            sendAmountToMadaApplication(call,String.format("%.2f", amount));
         }else{
-            Toast.makeText(mContext, "Invalid amount", Toast.LENGTH_SHORT).show();
+            call.reject("amount_not_valid");
+            mContext.unregisterReceiver(paymentStatusReceiver);
+            return;
         }
     }
 
-    private void sendAmountToMadaApplication(String amount) {
+    private void sendAmountToMadaApplication(PluginCall call,String amount) {
         if (!isMadaAppInstalled()) {
-            Toast.makeText(mContext, "Mada App Not Installed", Toast.LENGTH_SHORT).show();
+            call.reject("mada_app_not_installed");
+            mContext.unregisterReceiver(paymentStatusReceiver);
+            return;
+        } else if (!isMadaAppRunning()) {
+            call.reject("mada_app_not_running");
+            mContext.unregisterReceiver(paymentStatusReceiver);
             return;
         }
-        if (!isMadaAppRunning()) {
-            Toast.makeText(mContext, "Mada App Not Running", Toast.LENGTH_SHORT).show();
-        }
+
         Intent intent = new Intent("surepay.mada.PAY_AMOUNT");
 //        intent.putExtra("LICENCE", "YOUR_LICENCE_FROM_SURE_HERE");
         intent.putExtra("AMOUNT", amount);
@@ -298,16 +309,19 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         public void onReceive(Context context, Intent intent) {
             String result = intent.getExtras().getString("RESULT");
             Log.e("RESULT","==================> "+result);
+            if(result==null){
+                JSObject jsObject = new JSObject();
+                jsObject.put("status", false);
+                pluginCall.resolve(jsObject);
+                return;
+            }
             try {
-                JSONObject obj = new JSONObject(result);
-                Log.d("My App", obj.toString());
                 if(pluginCall!=null){
                     JSObject jsObject = new JSObject();
                     jsObject.put("status", true);
                     jsObject.put("result", result);
                     pluginCall.resolve(jsObject);
                 }
-                context.unregisterReceiver(this);
             } catch (Exception e) {
                 e.printStackTrace();
                 JSObject jsObject = new JSObject();
@@ -316,6 +330,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
                 pluginCall.resolve(jsObject);
                 Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
             }
+            context.unregisterReceiver(this);
         }
     }
 
