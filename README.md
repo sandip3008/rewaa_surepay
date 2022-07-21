@@ -127,14 +127,14 @@ enableBluetoothListenerService(value: string) => Promise<string>
 ### submitTransaction(...)
 
 ```typescript
-submitTransaction(amount: string) => Promise<string>
+submitTransaction(options: { amount: string; }) => Promise<{ amount: string; }>
 ```
 
-| Param        | Type                |
-| ------------ | ------------------- |
-| **`amount`** | <code>string</code> |
+| Param         | Type                             |
+| ------------- | -------------------------------- |
+| **`options`** | <code>{ amount: string; }</code> |
 
-**Returns:** <code>Promise&lt;string&gt;</code>
+**Returns:** <code>Promise&lt;{ amount: string; }&gt;</code>
 
 --------------------
 

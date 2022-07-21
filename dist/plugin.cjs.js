@@ -33,9 +33,9 @@ class SurepayWeb extends core.WebPlugin {
         console.log('getConnectedDeviceInfo', value);
         return value;
     }
-    async submitTransaction(amount) {
-        console.log('submitTransaction amount: ', amount);
-        return amount;
+    async submitTransaction(options) {
+        console.log('submitTransaction amount: ', options);
+        return options;
     }
     async getLastTransactionDetails(value) {
         console.log('getLastTransactionDetails', value);

@@ -103,15 +103,15 @@
       },
       {
         "name": "submitTransaction",
-        "signature": "(amount: string) => Promise<string>",
+        "signature": "(options: { amount: string; }) => Promise<{ amount: string; }>",
         "parameters": [
           {
-            "name": "amount",
+            "name": "options",
             "docs": "",
-            "type": "string"
+            "type": "{ amount: string; }"
           }
         ],
-        "returns": "Promise<string>",
+        "returns": "Promise<{ amount: string; }>",
         "tags": [],
         "docs": "",
         "complexTypes": [],
