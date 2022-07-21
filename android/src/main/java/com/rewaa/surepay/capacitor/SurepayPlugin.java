@@ -148,16 +148,15 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
             mContext.unregisterReceiver(paymentStatusReceiver);
             return;
         }
-        Log.i(TAG, "submitTransaction: " + call);
-        double finalAmount = 0.00d;
+        double d = 0.00d;
         try{
-            finalAmount = Double.parseDouble(String.format("%.2f", amount));
+            d = Double.parseDouble(amount);
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        Log.e("finalAmount",String.valueOf(finalAmount));
-        if(finalAmount > 0) {
-            sendAmountToMadaApplication(call,String.format("%.2f", amount));
+
+        if(d > 0) {
+            sendAmountToMadaApplication(call,String.format("%.2f", d));
         }else{
             call.reject("amount_not_valid");
             mContext.unregisterReceiver(paymentStatusReceiver);
@@ -205,8 +204,10 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
             return packageInfo != null;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            return false;
+        } catch (Exception e){
+            e.printStackTrace();
         }
+        return false;
     }
 
 
