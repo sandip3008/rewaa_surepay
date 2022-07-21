@@ -165,15 +165,15 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     }
 
     private void sendAmountToMadaApplication(PluginCall call,String amount) {
-        if (!isMadaAppInstalled()) {
-            call.reject("mada_app_not_installed");
-            mContext.unregisterReceiver(paymentStatusReceiver);
-            return;
-        } else if (!isMadaAppRunning()) {
-            call.reject("mada_app_not_running");
-            mContext.unregisterReceiver(paymentStatusReceiver);
-            return;
-        }
+        // if (!isMadaAppInstalled()) {
+        //     call.reject("mada_app_not_installed");
+        //     mContext.unregisterReceiver(paymentStatusReceiver);
+        //     return;
+        // } else if (!isMadaAppRunning()) {
+        //     call.reject("mada_app_not_running");
+        //     mContext.unregisterReceiver(paymentStatusReceiver);
+        //     return;
+        // }
 
         Intent intent = new Intent("surepay.mada.PAY_AMOUNT");
 //        intent.putExtra("LICENCE", "YOUR_LICENCE_FROM_SURE_HERE");
