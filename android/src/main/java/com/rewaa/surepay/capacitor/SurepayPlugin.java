@@ -176,7 +176,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         // }
 
         Intent intent = new Intent("surepay.mada.PAY_AMOUNT");
-//        intent.putExtra("LICENCE", "YOUR_LICENCE_FROM_SURE_HERE");
+       intent.putExtra("LICENCE", "kyNjYtNmIOGIwYzY1OTYtNYjUtNjU0MC00MGZPiQ2GH00GMV");
         intent.putExtra("AMOUNT", amount);
         mContext.sendBroadcast(intent);
     }
