@@ -5,6 +5,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ReceiptActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ReceiptBase64Activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <receiver
             android:name=".SurepayPlugin$PaymentStatusReceiver"
             android:enabled="true"

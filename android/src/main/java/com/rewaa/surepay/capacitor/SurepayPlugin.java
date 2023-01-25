@@ -17,9 +17,12 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.ActivityCallback;
 import com.sure.poslibrary.Constants;
 import com.sure.poslibrary.POSService;
 import com.sure.poslibrary.callback.ConnectionInterface;
+import androidx.activity.result.ActivityResult;
+
 
 import org.json.JSONObject;
 
@@ -36,7 +39,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @Override
     public void load() {
         super.load();
-        this.mContext = getContext();
+        this.mContext = getActivity();
         lService = new POSService(this);
 //        grantPermission();
     }
@@ -53,18 +56,45 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     }
 
     @PluginMethod
+    public void getBase64(PluginCall call) {
+        String content = call.getString("content");
+        Log.i(TAG, "printOnSurepay: " + call);
+        openReceiptActivity(content,"base64",call);
+    }
+
+    @PluginMethod
     public void printOnSurepay(PluginCall call) {
         String content = call.getString("content");
         String type = call.getString("type");
         Log.i(TAG, "printOnSurepay: " + call);
-        openReceiptActivity(content,type);
+        openReceiptActivity(content,type,call);
     }
 
-    private void openReceiptActivity(String data,String type) {
-        Intent intent = new Intent(mContext, ReceiptActivity.class);
-        intent.putExtra("data",data);
-        intent.putExtra("type",type);
-        mContext.startActivity(intent);
+    private void openReceiptActivity(String data,String type,PluginCall call) {
+        if(type.equalsIgnoreCase("base64")) {
+            Intent intent = new Intent(mContext, ReceiptBase64Activity.class);
+            intent.putExtra("data",data);
+            intent.putExtra("type",type);
+            startActivityForResult(call, intent, "getbase64String");
+        }else {
+            Intent intent = new Intent(mContext, ReceiptActivity.class);
+            intent.putExtra("data",data);
+            intent.putExtra("type",type);
+            mContext.startActivity(intent);
+        }
+    }
+
+    @ActivityCallback
+    private void getbase64String(PluginCall call, ActivityResult result) {
+        if (call == null) {
+            return;
+        }
+        int resultCode = result.getResultCode();
+        Intent data = result.getData();
+        JSObject ret = new JSObject();
+        ret.put("base64", data.getStringExtra("base64"));
+        call.resolve(ret);
+
     }
 
     @PluginMethod

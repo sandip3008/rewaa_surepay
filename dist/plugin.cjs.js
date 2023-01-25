@@ -14,39 +14,34 @@ class SurepayWeb extends core.WebPlugin {
         return options;
     }
     async printOnSurepay(options) {
-        console.log('printOnSurepay web 15', options);
+        return options;
+    }
+    async getBase64(options) {
+        console.log('getBase64', options);
         return options;
     }
     async enableBluetoothListenerService(value) {
-        console.log('enableBluetoothListenerService web 13', value);
         return value;
     }
     async disableBluetoothListnerService(value) {
-        console.log('disableBluetoothListnerService', value);
         return value;
     }
     async getSurepayConnectionStatus(value) {
-        console.log('getSurepayConnectionStatus', value);
         return value;
     }
     async getConnectedDeviceInfo(value) {
-        console.log('getConnectedDeviceInfo', value);
         return value;
     }
     async submitTransaction(options) {
-        console.log('submitTransaction amount: ', options);
         return options;
     }
     async getLastTransactionDetails(value) {
-        console.log('getLastTransactionDetails', value);
         return value;
     }
     async showLastTransactionDetails(value) {
-        console.log('showLastTransactionDetails', value);
         return value;
     }
     async getPrinterStatus(value) {
-        console.log('getPrinterStatus web 7', value);
         return value;
     }
     async exportLastTransaction(value) {

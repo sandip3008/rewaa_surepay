@@ -38,6 +38,22 @@
         "slug": "printonsurepay"
       },
       {
+        "name": "getBase64",
+        "signature": "(options: { content: string; }) => Promise<{ content: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ content: string; }"
+          }
+        ],
+        "returns": "Promise<{ content: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "getbase64"
+      },
+      {
         "name": "disableBluetoothListnerService",
         "signature": "(value: boolean) => Promise<boolean>",
         "parameters": [

@@ -11,48 +11,43 @@ export class SurepayWeb extends WebPlugin implements SurepayPlugin {
 
   
 
-  async printOnSurepay(options: { content: string, type: string }): Promise<{ content: string; type: string }> {
-    console.log('printOnSurepay web 15', options);
+  async printOnSurepay(options: { content: string, type: string }): Promise<{ content: string; type: string }> {    
     return options;
   }
 
-  async enableBluetoothListenerService(value: string): Promise<string> {
-    console.log('enableBluetoothListenerService web 13', value);
-    return value;
-  }
-
-  async disableBluetoothListnerService(value: boolean): Promise<boolean> {
-    console.log('disableBluetoothListnerService', value);
-    return value;
-  }
-
-  async getSurepayConnectionStatus(value: boolean): Promise<boolean> {
-    console.log('getSurepayConnectionStatus', value);
-    return value;
-  }
-
-  async getConnectedDeviceInfo(value: string): Promise<string> {
-    console.log('getConnectedDeviceInfo', value);
-    return value;
-  }
-
-  async submitTransaction(options: { amount: string }): Promise<{ amount: string }> {
-    console.log('submitTransaction amount: ', options);
+  async getBase64(options: { content: string }): Promise<{ content: string }> {    
     return options;
   }
 
-  async getLastTransactionDetails(value: string): Promise<string> {
-    console.log('getLastTransactionDetails', value);
+  async enableBluetoothListenerService(value: string): Promise<string> {    
+    return value;
+  }
+
+  async disableBluetoothListnerService(value: boolean): Promise<boolean> {    
+    return value;
+  }
+
+  async getSurepayConnectionStatus(value: boolean): Promise<boolean> {    
+    return value;
+  }
+
+  async getConnectedDeviceInfo(value: string): Promise<string> {    
+    return value;
+  }
+
+  async submitTransaction(options: { amount: string }): Promise<{ amount: string }> {    
+    return options;
+  }
+
+  async getLastTransactionDetails(value: string): Promise<string> {    
     return value;
   }
 
   async showLastTransactionDetails(value: string): Promise<string> {
-    console.log('showLastTransactionDetails', value);
     return value;
   }
 
   async getPrinterStatus(value: string): Promise<string> {
-    console.log('getPrinterStatus web 7', value);
     return value;
   }
 

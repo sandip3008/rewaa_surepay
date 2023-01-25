@@ -15,6 +15,7 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`printOnSurepay(...)`](#printonsurepay)
+* [`getBase64(...)`](#getbase64)
 * [`disableBluetoothListnerService(...)`](#disablebluetoothlistnerservice)
 * [`getSurepayConnectionStatus(...)`](#getsurepayconnectionstatus)
 * [`getConnectedDeviceInfo(...)`](#getconnecteddeviceinfo)
@@ -60,6 +61,21 @@ printOnSurepay(options: { content: string; type: string; }) => Promise<{ content
 | **`options`** | <code>{ content: string; type: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ content: string; type: string; }&gt;</code>
+
+--------------------
+
+
+### getBase64(...)
+
+```typescript
+getBase64(options: { content: string; }) => Promise<{ content: string; }>
+```
+
+| Param         | Type                              |
+| ------------- | --------------------------------- |
+| **`options`** | <code>{ content: string; }</code> |
+
+**Returns:** <code>Promise&lt;{ content: string; }&gt;</code>
 
 --------------------
 
