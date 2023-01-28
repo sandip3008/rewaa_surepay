@@ -1,5 +1,6 @@
 package com.rewaa.surepay.capacitor;
 
+import static com.rewaa.surepay.capacitor.ReceiptBase64Activity.base64;
 import static com.sure.poslibrary.POSService.lastFinTransStr;
 
 import android.app.ActivityManager;
@@ -89,12 +90,10 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         if (call == null) {
             return;
         }
-        int resultCode = result.getResultCode();
-        Intent data = result.getData();
         JSObject ret = new JSObject();
-        ret.put("base64", data.getStringExtra("base64"));
+        ret.put("base64", base64);
         call.resolve(ret);
-
+        base64 = null;
     }
 
     @PluginMethod

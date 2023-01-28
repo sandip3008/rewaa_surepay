@@ -44,6 +44,7 @@ public class ReceiptBase64Activity extends AppCompatActivity {
     WebView webView;
     ProgressBar progressBar;
     String TAG = "ReceiptActivity";
+    public static String base64="";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -117,9 +118,9 @@ public class ReceiptBase64Activity extends AppCompatActivity {
 //                                Bitmap bitmap = view.getDrawingCache();
                                 Bitmap temp = getBitmapFromView(view);
                                 Bitmap finalPrint = resize(temp, 800, 2600);
-                                String base64 = convertToBase64(finalPrint);
+                                base64 = convertToBase64(finalPrint);
                                 Intent resultIntent = new Intent();
-                                resultIntent.putExtra("base64", base64);
+                                resultIntent.putExtra("base64", "done");
                                 setResult(Activity.RESULT_OK, resultIntent);
                                 finish();
 
