@@ -4,13 +4,6 @@ import type { SurepayPlugin } from './definitions';
 
 export class SurepayWeb extends WebPlugin implements SurepayPlugin {
   
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
-  }
-
-  
-
   async printOnSurepay(options: { content: string, type: string }): Promise<{ content: string; type: string }> {    
     return options;
   }

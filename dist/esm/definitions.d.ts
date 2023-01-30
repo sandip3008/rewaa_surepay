@@ -1,9 +1,4 @@
 export interface SurepayPlugin {
-    echo(options: {
-        value: string;
-    }): Promise<{
-        value: string;
-    }>;
     printOnSurepay(options: {
         content: string;
         type: string;

@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -42,45 +41,31 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         super.load();
         this.mContext = getActivity();
         lService = new POSService(this);
-//        grantPermission();
-    }
-
-    @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
-        Log.i(TAG, "echo: test Surepay: " + call);
-        JSObject ret = new JSObject();
-        ret.put("value1", "Abc##");
-        ret.put("status", "connected");
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
     }
 
     @PluginMethod
     public void getBase64(PluginCall call) {
         String content = call.getString("content");
-        Log.i(TAG, "printOnSurepay: " + call);
-        openReceiptActivity(content,"base64",call);
+        openReceiptActivity(content, "base64", call);
     }
 
     @PluginMethod
     public void printOnSurepay(PluginCall call) {
         String content = call.getString("content");
         String type = call.getString("type");
-        Log.i(TAG, "printOnSurepay: " + call);
-        openReceiptActivity(content,type,call);
+        openReceiptActivity(content, type, call);
     }
 
-    private void openReceiptActivity(String data,String type,PluginCall call) {
-        if(type.equalsIgnoreCase("base64")) {
+    private void openReceiptActivity(String data, String type, PluginCall call) {
+        if (type.equalsIgnoreCase("base64")) {
             Intent intent = new Intent(mContext, ReceiptBase64Activity.class);
-            intent.putExtra("data",data);
-            intent.putExtra("type",type);
+            intent.putExtra("data", data);
+            intent.putExtra("type", type);
             startActivityForResult(call, intent, "getbase64String");
-        }else {
+        } else {
             Intent intent = new Intent(mContext, ReceiptActivity.class);
-            intent.putExtra("data",data);
-            intent.putExtra("type",type);
+            intent.putExtra("data", data);
+            intent.putExtra("type", type);
             mContext.startActivity(intent);
         }
     }
@@ -99,14 +84,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void enableBluetoothListenerService(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "enableBluetoothListenerService: " + call);
         if (lService.StartListenService(mContext, "BT", Constants.SERVICE_NAME, null, null, true) == 0) {
-            Log.w(TAG, "Service started to listen");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
         } else {
-            Log.w(TAG, "Failed to start service listener");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -116,14 +98,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void disableBluetoothListnerService(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "disableBluetoothListnerService: " + call);
         if (lService.ShutdownListenService() == 0) {
-            Log.w(TAG, "service is shutdown");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
         } else {
-            Log.w(TAG, "Failed to shutdown service");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -133,14 +112,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void getSurepayConnectionStatus(PluginCall call) {
 //        String value = call.getString("value");
-        Log.i(TAG, "getSurepayConnectionStatus: " + call);
         if (lService.checkConnectionStatus() == 0) {
-            Log.w(TAG, "Device is connected");
             JSObject ret = new JSObject();
             ret.put("result", true);
             call.resolve(ret);
         } else {
-            Log.w(TAG, "Device is not connected");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -149,14 +125,12 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void getConnectedDeviceInfo(PluginCall call) {
-        Log.i(TAG, "getConnectedDeviceInfo: " + call);
         if (lService.GetConnectedDeviceInfo() == 0) {
             Log.w(TAG, POSService.deviceInfoStr);
             JSObject ret = new JSObject();
             ret.put("deviceInfo", POSService.deviceInfoStr);
             call.resolve(ret);
         } else {
-            Log.w(TAG, "No device is connected\"");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -169,31 +143,31 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         paymentStatusReceiver = new PaymentStatusReceiver(call);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("surepay.mada.RESULT");
-        this.mContext.registerReceiver(paymentStatusReceiver,intentFilter);
+        this.mContext.registerReceiver(paymentStatusReceiver, intentFilter);
 
         String amount = call.getString("amount");
-        if(amount==null){
+        if (amount == null) {
             call.reject("amount_not_valid");
             mContext.unregisterReceiver(paymentStatusReceiver);
             return;
         }
         double d = 0.00d;
-        try{
+        try {
             d = Double.parseDouble(amount);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        if(d > 0) {
-            sendAmountToMadaApplication(call,String.format("%.2f", d));
-        }else{
+        if (d > 0) {
+            sendAmountToMadaApplication(call, String.format("%.2f", d));
+        } else {
             call.reject("amount_not_valid");
             mContext.unregisterReceiver(paymentStatusReceiver);
             return;
         }
     }
 
-    private void sendAmountToMadaApplication(PluginCall call,String amount) {
+    private void sendAmountToMadaApplication(PluginCall call, String amount) {
         // if (!isMadaAppInstalled()) {
         //     call.reject("mada_app_not_installed");
         //     mContext.unregisterReceiver(paymentStatusReceiver);
@@ -205,7 +179,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         // }
 
         Intent intent = new Intent("surepay.mada.PAY_AMOUNT");
-       intent.putExtra("LICENCE", "kyNjYtNmIOGIwYzY1OTYtNYjUtNjU0MC00MGZPiQ2GH00GMV");
+        intent.putExtra("LICENCE", "kyNjYtNmIOGIwYzY1OTYtNYjUtNjU0MC00MGZPiQ2GH00GMV");
         intent.putExtra("AMOUNT", amount);
         mContext.sendBroadcast(intent);
     }
@@ -233,7 +207,7 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
             return packageInfo != null;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -247,14 +221,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void showLastTransactionDetails(PluginCall call) {
-        Log.i(TAG, "showLastTransactionDetails: " + call);
         if (lService.ShowReceipt(mContext) == 0) {
-            Log.w(TAG, lastFinTransStr);
             JSObject ret = new JSObject();
             ret.put("trxInfo", "Showing transaction");
             call.resolve(ret);
         } else {
-            Log.w(TAG, "No transactions");
             JSObject ret = new JSObject();
             ret.put("result", "No transactions");
             call.resolve(ret);
@@ -263,14 +234,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void getLastTransactionDetails(PluginCall call) {
-        Log.i(TAG, "getLastTransactionDetails: " + call);
         if (lService.GetLastTrxResult(mContext) == 0) {
-            Log.w(TAG, lastFinTransStr);
             JSObject ret = new JSObject();
             ret.put("trxInfo", lastFinTransStr);
             call.resolve(ret);
         } else {
-            Log.w(TAG, "No transactions");
             JSObject ret = new JSObject();
             ret.put("result", false);
             call.resolve(ret);
@@ -279,14 +247,11 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void exportLastTransaction(PluginCall call) {
-        Log.i(TAG, "exportLastTransaction: " + call);
         if (lService.ExportReceipt(mContext) == 0) {
-            Log.w(TAG, lastFinTransStr);
             JSObject ret = new JSObject();
             ret.put("trxInfo", "File saved on Downloads folder");
             call.resolve(ret);
         } else {
-            Log.w(TAG, "No transactions");
             JSObject ret = new JSObject();
             ret.put("result", "Error");
             call.resolve(ret);
@@ -295,7 +260,6 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
 
     @PluginMethod
     public void clearLastTransaction(PluginCall call) {
-        Log.i(TAG, "clearLastTransaction: " + call);
         if (lService.ClearTransactions(mContext) == 0) {
             Log.w(TAG, lastFinTransStr);
             JSObject ret = new JSObject();
@@ -338,15 +302,14 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getExtras().getString("RESULT");
-            Log.e("RESULT","==================> "+result);
-            if(result==null){
+            if (result == null) {
                 JSObject jsObject = new JSObject();
                 jsObject.put("status", false);
                 pluginCall.resolve(jsObject);
                 return;
             }
             try {
-                if(pluginCall!=null){
+                if (pluginCall != null) {
                     JSObject jsObject = new JSObject();
                     jsObject.put("status", true);
                     jsObject.put("result", result);
@@ -358,7 +321,6 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
                 jsObject.put("status", false);
                 jsObject.put("result", result);
                 pluginCall.resolve(jsObject);
-                Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
             }
             context.unregisterReceiver(this);
         }

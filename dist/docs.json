@@ -6,22 +6,6 @@
     "tags": [],
     "methods": [
       {
-        "name": "echo",
-        "signature": "(options: { value: string; }) => Promise<{ value: string; }>",
-        "parameters": [
-          {
-            "name": "options",
-            "docs": "",
-            "type": "{ value: string; }"
-          }
-        ],
-        "returns": "Promise<{ value: string; }>",
-        "tags": [],
-        "docs": "",
-        "complexTypes": [],
-        "slug": "echo"
-      },
-      {
         "name": "printOnSurepay",
         "signature": "(options: { content: string; type: string; }) => Promise<{ content: string; type: string; }>",
         "parameters": [

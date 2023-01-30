@@ -9,15 +9,10 @@ const Surepay = core.registerPlugin('Surepay', {
 });
 
 class SurepayWeb extends core.WebPlugin {
-    async echo(options) {
-        console.log('ECHO', options);
-        return options;
-    }
     async printOnSurepay(options) {
         return options;
     }
     async getBase64(options) {
-        console.log('getBase64', options);
         return options;
     }
     async enableBluetoothListenerService(value) {
