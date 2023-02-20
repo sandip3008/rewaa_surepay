@@ -117,7 +117,7 @@ public class ReceiptBase64Activity extends AppCompatActivity {
 //                                view.buildDrawingCache();
 //                                Bitmap bitmap = view.getDrawingCache();
                                 Bitmap temp = getBitmapFromView(view);
-                                Bitmap finalPrint = resize(temp, 800, 2600);
+                                Bitmap finalPrint = resize(temp, 600, 2600);
                                 base64 = convertToBase64(finalPrint);
                                 Intent resultIntent = new Intent();
                                 resultIntent.putExtra("base64", "done");
