@@ -46,6 +46,8 @@ public class SurepayPlugin extends Plugin implements ConnectionInterface {
     @PluginMethod
     public void getBase64(PluginCall call) {
         String content = call.getString("content");
+        String isTestEnv = call.getString("isTestEnv");
+        Log.w("isTestEnv", isTestEnv);
         openReceiptActivity(content, "base64", call);
     }
 
