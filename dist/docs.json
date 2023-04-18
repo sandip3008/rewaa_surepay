@@ -23,15 +23,15 @@
       },
       {
         "name": "getBase64",
-        "signature": "(options: { content: string; isTestEnv: boolean; }) => Promise<{ content: string; isTestEnv: boolean; }>",
+        "signature": "(options: { content: string; }) => Promise<{ content: string; }>",
         "parameters": [
           {
             "name": "options",
             "docs": "",
-            "type": "{ content: string; isTestEnv: boolean; }"
+            "type": "{ content: string; }"
           }
         ],
-        "returns": "Promise<{ content: string; isTestEnv: boolean; }>",
+        "returns": "Promise<{ content: string; }>",
         "tags": [],
         "docs": "",
         "complexTypes": [],

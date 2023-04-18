@@ -10,10 +10,8 @@ export declare class SurepayWeb extends WebPlugin implements SurepayPlugin {
     }>;
     getBase64(options: {
         content: string;
-        isTestEnv: boolean;
     }): Promise<{
         content: string;
-        isTestEnv: boolean;
     }>;
     enableBluetoothListenerService(value: string): Promise<string>;
     disableBluetoothListnerService(value: boolean): Promise<boolean>;

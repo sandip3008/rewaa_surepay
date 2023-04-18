@@ -52,14 +52,14 @@ printOnSurepay(options: { content: string; type: string; }) => Promise<{ content
 ### getBase64(...)
 
 ```typescript
-getBase64(options: { content: string; isTestEnv: boolean; }) => Promise<{ content: string; isTestEnv: boolean; }>
+getBase64(options: { content: string; }) => Promise<{ content: string; }>
 ```
 
-| Param         | Type                                                  |
-| ------------- | ----------------------------------------------------- |
-| **`options`** | <code>{ content: string; isTestEnv: boolean; }</code> |
+| Param         | Type                              |
+| ------------- | --------------------------------- |
+| **`options`** | <code>{ content: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ content: string; isTestEnv: boolean; }&gt;</code>
+**Returns:** <code>Promise&lt;{ content: string; }&gt;</code>
 
 --------------------
 

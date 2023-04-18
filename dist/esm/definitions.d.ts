@@ -8,10 +8,8 @@ export interface SurepayPlugin {
     }>;
     getBase64(options: {
         content: string;
-        isTestEnv: boolean;
     }): Promise<{
         content: string;
-        isTestEnv: boolean;
     }>;
     disableBluetoothListnerService(value: boolean): Promise<boolean>;
     getSurepayConnectionStatus(value: boolean): Promise<boolean>;

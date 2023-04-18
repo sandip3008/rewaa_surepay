@@ -8,7 +8,7 @@ export class SurepayWeb extends WebPlugin implements SurepayPlugin {
     return options;
   }
 
-  async getBase64(options: { content: string, isTestEnv: boolean }): Promise<{ content: string, isTestEnv: boolean }> {    
+  async getBase64(options: { content: string }): Promise<{ content: string }> {    
     return options;
   }
 
